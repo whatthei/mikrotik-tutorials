@@ -1,4 +1,10 @@
-#Config ProtonVPN for Mikrotik
+# 🛡️ Config ProtonVPN for Mikrotik
+
+```shell
+/tool fetch url="https://protonvpn.com/download/ProtonVPN_ike_root.der"
+/certificate import file-name=ProtonVPN_ike_root.der
+```
+
 ```shell
 /ip ipsec mode-config
 add connection-mark=ProtonVPN name=ProtonVPN responder=no
@@ -19,18 +25,15 @@ add dh-group=modp4096,modp2048 enc-algorithm=aes-256 hash-algorithm=sha256 name=
 add address=nl-free-04.protonvpn.com disabled=yes exchange-mode=ike2 name=ProtonVPN profile=ProtonVPN send-initial-contact=no
 ```
 
-
 ```shell
 /ip ipsec proposal
 set [ find default=yes ] auth-algorithms=sha256 enc-algorithms=aes-256-cbc pfs-group=modp2048
 ```
 
-
 ```shell
 /ip ipsec identity
 add auth-method=eap certificate=ProtonVPN_ike_root.der_0 eap-methods=eap-mschapv2 generate-policy=port-override mode-config=ProtonVPN peer=ProtonVPN policy-template-group=ProtonVPN username=USERNAME password=PASSWORD
 ```
-
 
 ```shell
 /ip ipsec policy
