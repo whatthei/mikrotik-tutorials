@@ -31,14 +31,14 @@ set [ find name=ProtonVPN ] connection-mark=ProtonVPN
 /ip ipsec mode-config
 add connection-mark=ProtonVPN name=ProtonVPN responder=no
 ```
-5. Create peer and identity configurations. Specify your ProtonVPN credentials in the username and password parameters:
+5. Create peer and identity configurations. Specify your ProtonVPN **server** and credentials in the **username** and **password** parameters:
 ```shell
 /ip ipsec peer
-add address=<span style="color:red">nl-free-04.protonvpn.com</span> disabled=yes exchange-mode=ike2 name=ProtonVPN profile=ProtonVPN send-initial-contact=no
+add address=nl-free-04.protonvpn.com disabled=yes exchange-mode=ike2 name=ProtonVPN profile=ProtonVPN send-initial-contact=no
 ```
 ```shell
 /ip ipsec identity
-add auth-method=eap certificate=ProtonVPN_ike_root.der_0 eap-methods=eap-mschapv2 generate-policy=port-override mode-config=ProtonVPN peer=ProtonVPN policy-template-group=ProtonVPN username=<span style="color:red">USERNAME</span> password=<span style="color:red">PASSWORD</span>
+add auth-method=eap certificate=ProtonVPN_ike_root.der_0 eap-methods=eap-mschapv2 generate-policy=port-override mode-config=ProtonVPN peer=ProtonVPN policy-template-group=ProtonVPN username=USERNAME password=PASSWORD
 ```
 You can find your ProtonVPN service credentials in the ProtonVPN Account dashboard. Copy the credentials using “Copy” the buttons on the right.
 
