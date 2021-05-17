@@ -50,7 +50,7 @@ It is possible to send only specific traffic over the tunnel by using the connec
 ```shell
 /ip firewall address-list
 add address=mikrotik.com list=VPN
-add address=8.8.8.8 list=VPN
+add address=protonvpn.com list=VPN
 ```
 - Apply connection-mark to traffic matching the created address list:
 ```shell
