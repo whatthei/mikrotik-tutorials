@@ -89,7 +89,7 @@ add auth-method=eap certificate="NordVPN" eap-methods=eap-mschapv2 generate-poli
 add action=accept chain=forward connection-mark="NordVPN" place-before=[find where action=fasttrack-connection]
 ```
 
-8. # Reduce MSS
+8. Reduce MSS
 ```shell
 /ip firewall mangle
 add action=change-mss chain=forward new-mss=1360 passthrough=yes protocol=tcp connection-mark="NordVPN" tcp-flags=syn tcp-mss=!0-1360
