@@ -1,11 +1,13 @@
 # (little deprecated) ⚛️ Config ProtonVPN(Free server) for Mikrotik 
 > Сhecked RouterOS version - **6.48.2**
 1. Open the terminal in your RouterOS settings.
+
 2. Install the ProtonVPN root CA certificate by running the following commands:
 ```shell
 /tool fetch url="https://protonvpn.com/download/ProtonVPN_ike_root.der"
 /certificate import file-name=ProtonVPN_ike_root.der
 ```
+
 3. Now you have to set up the IPsec tunnel. It is advised to create a separate Phase 1 profile and Phase 2 proposal configurations to avoid interfering with any existing or future IPsec configuration:
 ```shell
 /ip ipsec profile
@@ -24,11 +26,13 @@ add name="ProtonVPN"
 /ip ipsec policy
 add dst-address=0.0.0.0/0 group="ProtonVPN" proposal="ProtonVPN" src-address=0.0.0.0/0 template=yes
 ```
+
 4. Create a new mode config entry with responder=no that will request configuration parameters from the server:
 ```shell
 /ip ipsec mode-config
 add connection-mark="ProtonVPN" name="ProtonVPN" responder=no
 ```
+
 5. Create peer and identity configurations. Specify your ProtonVPN **server** and credentials in the **username** and **password** parameters:
 
 ```shell
@@ -59,4 +63,4 @@ add action=mark-connection chain=prerouting dst-address-list="VPN" new-connectio
 ## REFERENCES
 - [Linux IKEv2 ProtonVPN tutorial](https://protonvpn.com/support/linux-ikev2-protonvpn/) from ProtonVPN support
 - [IKEv2 EAP between VPN and RouterOS](https://wiki.mikrotik.com/wiki/IKEv2_EAP_between_NordVPN_and_RouterOS) from Mikrotik wiki
-- 🆕🔥 [How to setup ProtonVPN on MikroTik routers](https://protonvpn.com/support/vpn-mikrotik-router/) from ProtonVPN supprt 
+- 🆕🔥 [How to setup ProtonVPN on MikroTik routers](https://protonvpn.com/support/vpn-mikrotik-router/) from ProtonVPN suppot 
