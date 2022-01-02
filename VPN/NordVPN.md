@@ -45,19 +45,20 @@ add auth-method=eap certificate="NordVPN" eap-methods=eap-mschapv2 generate-poli
 
 6. Now choose what to send over the VPN tunnel. 
 
-    1. All traffic or specific traffic (by source)
+    - All traffic or specific traffic (by source)
     
     Create a new address list:
-    - All
+
+    fro all traffic:
     ```shell
     /ip firewall address-list
     add address=192.168.88.0/24 list="VPN"
     ```
-    - Specific
+    or specific:
     ```shell
     /ip firewall address-list
-    add address=192.168.88.10 list="VPN"
-    add address=192.168.88.11 list="VPN"
+    add address=192.168.88.252 list="VPN"
+    add address=192.168.88.248 list="VPN"
     ```
 
     Apply connection-mark to traffic matching the created address list:
@@ -66,7 +67,7 @@ add auth-method=eap certificate="NordVPN" eap-methods=eap-mschapv2 generate-poli
     add action=mark-connection chain=prerouting src-address-list="VPN" new-connection-mark="NordVPN" passthrough=yes
     ```
 
-    2. Specific traffic (by destination)
+    - Specific traffic (by destination)
 
     Create a new address list:
     ```shell
@@ -87,13 +88,13 @@ add auth-method=eap certificate="NordVPN" eap-methods=eap-mschapv2 generate-poli
 add action=accept chain=forward connection-mark="NordVPN" place-before=[find where action=fasttrack-connection]
 ```
 
-8. # Reduce MSS (should be about 1200 to 1400, but 1360 worked for me)
+8. # Reduce MSS
 ```shell
 /ip firewall mangle
 add action=change-mss chain=forward new-mss=1360 passthrough=yes protocol=tcp connection-mark="NordVPN" tcp-flags=syn tcp-mss=!0-1360
 ```
 
 ## REFERENCES
-- [NordVPN (IPSEC/IKEv2) + killswitch (For ROS6)](https://forum.mikrotik.com/viewtopic.php?f=23&t=169273) from erkexzcx
+- 🔥 [NordVPN (IPSEC/IKEv2) + killswitch (For ROS6)](https://forum.mikrotik.com/viewtopic.php?f=23&t=169273) from erkexzcx
 - [IKEv2 EAP between VPN and RouterOS](https://wiki.mikrotik.com/wiki/IKEv2_EAP_between_NordVPN_and_RouterOS) from Mikrotik wiki
 - [MikroTik IKEv2 setup with NordVPN](https://support.nordvpn.com/Connectivity/Router/1360295132/MikroTik-IKEv2-setup-with-NordVPN.htm) from NordVPN support

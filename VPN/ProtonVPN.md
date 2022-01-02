@@ -1,4 +1,4 @@
-# ⚛️ Config ProtonVPN(Free server) for Mikrotik
+# (little deprecated) ⚛️ Config ProtonVPN(Free server) for Mikrotik 
 > Сhecked RouterOS version - **6.48.2**
 1. Open the terminal in your RouterOS settings.
 2. Install the ProtonVPN root CA certificate by running the following commands:
